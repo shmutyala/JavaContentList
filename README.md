@@ -94,13 +94,6 @@
 4. Static Block
 5. Final Keyword
 
-## Inner Classes in Java (Will take at last)
-1. Java Inner Class
-2. Normal Inner Class
-3. Method Local Inner Class
-4. Anonymous Inner Class
-5. Static Nested Class
-
 ## OOPs Concepts in Java
 1. OOPs Concepts
 
@@ -160,4 +153,9 @@
 1. Compile time, Runtime Polymorphism in Java
 2. Static and Dynamic Binding in Java
 
-
+## Inner Classes in Java
+1. Java Inner Class
+2. Normal Inner Class
+3. Method Local Inner Class
+4. Anonymous Inner Class
+5. Static Nested Class
