@@ -1,0 +1,60 @@
+import spock.lang.Specification
+import org.springframework.http.HttpHeaders
+import org.springframework.http.ResponseEntity
+import org.springframework.web.reactive.function.client.WebClient
+import org.springframework.web.util.UriComponentsBuilder
+
+class IEMDConnectionSpec extends Specification {
+
+    def "should call IEMD API and return a list of InterlineAgreement"() {
+        given:
+        def iemdUrl = "https://example.com/iemd"
+        def expectedResponse = ResponseEntity.ok().body([new InterlineAgreement()])
+
+        and:
+        def mockWebClient = Mock(WebClient)
+        mockWebClient.get() >> mockWebClient
+        mockWebClient.uri(_) >> mockWebClient
+        mockWebClient.headers(_) >> mockWebClient
+        mockWebClient.retrieve() >> mockWebClient
+        mockWebClient.toEntity(_) >> expectedResponse
+
+        and:
+        def iemdConnection = new IEMDConnection(iemdUrl, mockWebClient)
+
+        when:
+        def response = iemdConnection.getAgreements()
+
+        then:
+        response == expectedResponse
+    }
+
+    def "should return a list of InterlineAgreement from getAirLineAgreements method"() {
+        given:
+        def iemdConnection = new IEMDConnection("https://example.com/iemd", null)
+        iemdConnection.getAgreements() >> ResponseEntity.ok().body([new InterlineAgreement()])
+
+        when:
+        def agreements = iemdConnection.getAirLineAgreements()
+
+        then:
+        agreements.size() == 1
+        agreements[0] instanceof InterlineAgreement
+    }
+
+    def "should build HttpHeaders with correct content type and accept headers"() {
+        given:
+        def iemdConnection = new IEMDConnection("https://example.com/iemd", null)
+
+        when:
+        def headers = iemdConnection.buildHeaders()
+
+        then:
+        headers.contentType == "application/json"
+        headers.accept == "application/json"
+    }
+}
+
+class InterlineAgreement {
+    // Define your InterlineAgreement properties here
+}
